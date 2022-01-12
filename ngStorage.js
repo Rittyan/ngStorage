@@ -208,8 +208,9 @@
                 // });
 
                 // @see https://github.com/gsklee/ngStorage/issues/258
-                $rootScope.$watch(function () {return $storage}, function () {
-                  $storage.$apply();
+                var setTimeout = window[window.Zone.__symbol__('setTimeout')];
+                $rootScope.$watch(function() {
+                  _debounce || (_debounce = setTimeout($storage.$apply, 100));
                 });
 
                 // #6: Use `$window.addEventListener` instead of `angular.element` to avoid the jQuery-specific `event.originalEvent`
